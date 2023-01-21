@@ -1,2 +1,3 @@
-# website
-Martin Raynov's Website
+# Introduction
+
+This website is used to post different contents
