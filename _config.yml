@@ -1,4 +1,7 @@
-theme: minima
+theme: jekyll-theme-chirpy
+baseurl: ""
+lang: en
+timezone: Europe/Paris
 name : Martin RAYNOV
 title : Martin RAYNOV's website
 description : Website and Blog
