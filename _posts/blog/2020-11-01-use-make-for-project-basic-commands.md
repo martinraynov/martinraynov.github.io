@@ -2,6 +2,8 @@
 layout: post
 title: "Use make for project basic commands"
 date: 2020-11-01
+description: # Add description
+img:  # Add image post (optional)
 ---
 
 When we start a new project or we switch to an old project we always bump to the problem with the different commands to execute to start, build, deploy our application. Sometimes we use docker, sometimes we compile a binary to run and sometimes we have a list of commands to execute only to have our environment ready for development. 

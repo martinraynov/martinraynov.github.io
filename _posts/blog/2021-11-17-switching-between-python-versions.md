@@ -2,6 +2,8 @@
 layout: post
 title: "Switching between Python versions (LINUX)"
 date: 2021-11-17
+description: # Add description
+img:  # Add image post (optional)
 ---
 
 When you install a new version of python it won't always update your basic **python** and **python3** commands. To configure your environment to use the latest version you have to make some configuration.
