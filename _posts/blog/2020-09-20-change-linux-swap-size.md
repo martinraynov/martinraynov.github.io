@@ -3,7 +3,7 @@ layout: post
 title: "Change Linux swap size"
 date: 2020-09-20
 description: # Add description
-img:  # Add image post (optional)
+img: posts/change-linux-swap-size_1.png # Add image post (optional)
 tags: [linux, swap] # add tag
 ---
 

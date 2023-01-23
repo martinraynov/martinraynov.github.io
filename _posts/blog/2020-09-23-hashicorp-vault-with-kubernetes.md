@@ -3,7 +3,7 @@ layout: post
 title: "Hashicorp VAULT with Kubernetes"
 date: 2020-09-23
 description: # Add description
-img:  # Add image post (optional)
+img: posts/hashicorp-vault-with-kubernetes_1.png # Add image post (optional)
 tags: [kubernetes, hashicorp, vault] # add tag
 ---
 

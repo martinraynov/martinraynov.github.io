@@ -3,7 +3,7 @@ layout: post
 title: "Switching between Python versions (LINUX)"
 date: 2021-11-17
 description: # Add description
-img:  # Add image post (optional)
+img: posts/switching-between-python-versions_1.png # Add image post (optional)
 tags: [python] # add tag
 ---
 

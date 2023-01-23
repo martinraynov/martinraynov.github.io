@@ -3,7 +3,7 @@ layout: post
 title: "Script to generate Github Releases"
 date: 2020-11-08
 description: # Add description
-img:  # Add image post (optional)
+img: posts/script-to-generate-github-releases_1.png # Add image post (optional)
 tags: [github] # add tag
 ---
 

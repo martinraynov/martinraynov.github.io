@@ -3,7 +3,7 @@ layout: post
 title: "Keycloak : How to set log level via command line"
 date: 2021-11-09
 description: # Add description
-img:  # Add image post (optional)
+img: posts/keycloak-log-level-using-cli_1.png # Add image post (optional)
 tags: [keycloak] # add tag
 ---
 

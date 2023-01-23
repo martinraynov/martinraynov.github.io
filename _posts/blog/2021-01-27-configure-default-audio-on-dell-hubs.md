@@ -3,7 +3,7 @@ layout: post
 title: "Configure default audio on Dell hubs (Linux)"
 date: 2021-01-27
 description: # Add description
-img:  # Add image post (optional)
+img: posts/configure-default-audio-on-dell-hubs_1.png # Add image post (optional)
 tags: [dell] # add tag
 ---
 

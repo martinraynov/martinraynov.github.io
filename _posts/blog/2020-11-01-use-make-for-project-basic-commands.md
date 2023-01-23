@@ -3,7 +3,7 @@ layout: post
 title: "Use make for project basic commands"
 date: 2020-11-01
 description: # Add description
-img:  # Add image post (optional)
+img: posts/use-make-for-project-basic-commands_1.png # Add image post (optional)
 tags: [make] # add tag
 ---
 
