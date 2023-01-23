@@ -1,6 +1,13 @@
+title: Martin RAYNOV's Website
+email: mraynov@gmail.com
+description: >- # this means to ignore newlines until "baseurl:"
+  Martin RAYNOV's website and blog.
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "" # the base hostname & protocol for your site, e.g. http://example.com
+github_username:  martinraynov
+
+# Build settings
+markdown: kramdown
 theme: minima
-name : Martin RAYNOV
-title : Website & Blog
-description : Website and Blog
-avatar : https://avatars.githubusercontent.com/u/46927797?v=4
-# footer-links
+plugins:
+  - jekyll-feed
