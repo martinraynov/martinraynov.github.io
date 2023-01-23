@@ -16,7 +16,7 @@ This example is tested on specific Dell docking stations (but I think that the c
 * DELL Dock TB16
 * DELL Dock WD19DC
 
-[![](../../images/configure-default-audio-on-dell-hubs_1.png)](../../images/configure-default-audio-on-dell-hubs_1.png)
+[![](../../assets/img/posts/configure-default-audio-on-dell-hubs_1.png)](../../assets/img/posts/configure-default-audio-on-dell-hubs_1.png)
 
 ### 1. Check the available inputs/outputs that are available
 
