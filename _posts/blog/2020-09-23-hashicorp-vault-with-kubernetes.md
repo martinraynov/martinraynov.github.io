@@ -2,6 +2,9 @@
 layout: post
 title: "Hashicorp VAULT with Kubernetes"
 date: 2020-09-23
+description: # Add description
+img: posts/hashicorp-vault-with-kubernetes_1.png # Add image post (optional)
+tags: [kubernetes, hashicorp, vault] # add tag
 ---
 
 If you use Kubernetes and you have multiple pods running it becomes complicated when you must update your credentials (like the credentials of your database). You can use Kubernetes secrets but still the credentials are only encoded in base64 and not encrypted.
