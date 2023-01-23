@@ -4,6 +4,7 @@ title: "Script to generate Github Releases"
 date: 2020-11-08
 description: # Add description
 img:  # Add image post (optional)
+tags: [github] # add tag
 ---
 
 **Github Release** is a higher concept based on the git tags. A Release is created from an existing tag and can contain additional information like software package, release notes and links to binary files, for other people to use.

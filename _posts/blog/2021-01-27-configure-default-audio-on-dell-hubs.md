@@ -4,6 +4,7 @@ title: "Configure default audio on Dell hubs (Linux)"
 date: 2021-01-27
 description: # Add description
 img:  # Add image post (optional)
+tags: [dell] # add tag
 ---
 
 All the persons that have used a Dell docking stations under Linux have encountered the issue that it switches automatically the audio input/output to the ones on the dock. This is great if you have an audio input connected to your dock but if you don't you must always go to the preferences are switch back to the laptop defaults. 

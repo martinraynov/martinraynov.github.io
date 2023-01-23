@@ -4,6 +4,7 @@ title: "Keycloak : How to set log level via command line"
 date: 2021-11-09
 description: # Add description
 img:  # Add image post (optional)
+tags: [keycloak] # add tag
 ---
 
 Keycloak is an open source identity and access management solution (SSO). It's a pretty complete solution but like all complexe application is difficult to debug.

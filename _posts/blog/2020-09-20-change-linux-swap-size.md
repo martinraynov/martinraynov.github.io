@@ -4,6 +4,7 @@ title: "Change Linux swap size"
 date: 2020-09-20
 description: # Add description
 img:  # Add image post (optional)
+tags: [linux, swap] # add tag
 ---
 
 When you already have a swap partition installed and configured but you want to add a few Gigs you can do it without having to reinstall your Linux by following these simple steps.

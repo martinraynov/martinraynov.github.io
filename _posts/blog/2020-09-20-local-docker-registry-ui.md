@@ -4,6 +4,7 @@ title: "Configure a local Docker registry UI"
 date: 2020-09-20
 description: # Add description
 img:  # Add image post (optional)
+tags: [docker] # add tag
 ---
 
 Dockerhub is a very practical and useful website where you can find all the information about docker images and versions. But if you have a private registry configured, normally you can only access it using the [docker APIs](https://docs.docker.com/registry/spec/api/). There are some docker UI solutions that can be used to display locally all the images informations without having to use manually the APIs.
