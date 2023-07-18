@@ -3,7 +3,7 @@ layout: post
 title: "Configure a local Docker registry UI"
 date: 2020-09-20
 description: # Add description
-img: posts/local-docker-registry-ui_1.png # Add image post (optional)
+img: posts/docker.png # Add image post (optional)
 tags: [docker] # add tag
 ---
 
