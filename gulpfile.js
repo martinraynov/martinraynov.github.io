@@ -31,8 +31,18 @@ gulp.task('browser-sync', ['sass', 'img', 'jekyll-build'], function() {
     });
 });
 
-// Production build task
-gulp.task('build', ['sass', 'img', 'jekyll-build', 'css-minify']);
+// Production build task - css-minify depends on sass completing first
+gulp.task('css-prod', ['sass'], function () {
+    return gulp.src('assets/css/main.css')
+        .pipe(cleanCSS({
+            compatibility: '*',
+            level: 2
+        }))
+        .pipe(gulp.dest('_site/assets/css'))
+        .pipe(gulp.dest('assets/css'));
+});
+
+gulp.task('build', ['css-prod', 'img', 'jekyll-build']);
 
 // Compile files
 gulp.task('sass', function () {
@@ -50,11 +60,11 @@ gulp.task('sass', function () {
         .pipe(gulp.dest('assets/css'));
 });
 
-// Minify CSS for production
-gulp.task('css-minify', function () {
+// Standalone CSS minification (expects sass to have run already)
+gulp.task('css-minify', ['sass'], function () {
     return gulp.src('assets/css/main.css')
         .pipe(cleanCSS({
-            compatibility: 'ie8',
+            compatibility: '*',
             level: 2
         }))
         .pipe(gulp.dest('_site/assets/css'))

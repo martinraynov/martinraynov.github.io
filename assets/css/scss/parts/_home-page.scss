@@ -143,21 +143,25 @@ footer {
   align-items: stretch;
   min-height: 11rem;
   border-radius: 10px;
-  overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  // overflow: visible so the glow pseudo-element is not clipped
+  overflow: visible;
+  // Transition only specific GPU-friendly properties
+  transition:
+    transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    box-shadow 0.4s ease,
+    border-color 0.3s ease;
   box-shadow: 0 2px 8px 0 rgba(31, 35, 46, 0.1);
   background-color: $white;
   position: relative;
-  
-  // Staggered fade-in animation on page load with slide and scale
+
+  // Staggered entrance animation
   opacity: 0;
   transform: translateY(30px) scale(0.95);
-  animation: slideInScale 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-  
-  // Add a subtle border
+  animation: slideInScale 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+
   border: 1px solid rgba(31, 35, 46, 0.05);
-  
-  // Subtle continuous glow animation
+
+  // Glow pseudo-element - only visible on hover (not continuous)
   &::after {
     content: '';
     position: absolute;
@@ -165,61 +169,56 @@ footer {
     left: -2px;
     right: -2px;
     bottom: -2px;
-    border-radius: 10px;
-    background: linear-gradient(135deg, rgba(38, 57, 89, 0.1), rgba(38, 57, 89, 0.05));
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(38, 57, 89, 0.12), rgba(38, 57, 89, 0.04));
     opacity: 0;
     z-index: -1;
-    animation: pulseGlow 3s ease-in-out infinite;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
   }
-  
+
   &:hover {
-    transform: translate(0px, -6px) scale(1.01);
+    transform: translateY(-6px) scale(1.01);
     box-shadow: 0 20px 60px -10px rgba(10, 16, 34, 0.25);
     border-color: rgba(38, 57, 89, 0.15);
-    
-    // Enhanced glow on hover
+
+    // Show glow on hover only
     &::after {
-      opacity: 0.6;
-      animation: pulseGlowHover 1.5s ease-in-out infinite;
+      opacity: 1;
     }
-    
+
     .post-thumbnail {
-      transform: scale(1.08);
-      
+      transform: scale(1.05);
+
+      // Gradient overlay
       &::after {
         opacity: 0.3;
       }
-      
-      // Shimmer effect on thumbnail
+
+      // Shimmer sweep
       &::before {
         opacity: 1;
-        transform: translateX(100%);
+        transform: translateX(200%);
       }
     }
-    
+
     .post-title a {
       color: lighten($dark-blue, 10%);
-      transform: translateX(6px);
-      text-shadow: 0 2px 4px rgba(38, 57, 89, 0.1);
+      transform: translateX(4px);
     }
-    
+
     .post-content {
       .post-date,
       .post-words {
         opacity: 1;
         transform: translateY(0);
       }
-      
-      // Animate the left border accent
+
+      // Left accent border
       &::before {
+        transform: scaleY(1);
         opacity: 1;
-        animation: borderGrow 0.4s ease-out;
       }
-    }
-    
-    // Animate excerpt text
-    p {
-      animation: textFadeIn 0.5s ease-out;
     }
   }
 
@@ -230,29 +229,32 @@ footer {
     background-size: cover;
     background-position: center center;
     position: relative;
+    // Clip shimmer and overlay inside thumbnail only
     overflow: hidden;
+    border-radius: 10px 0 0 10px;
     transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    
-    // Shimmer effect
+
+    // Shimmer sweep
     &::before {
       content: '';
       position: absolute;
       top: 0;
       left: -100%;
-      width: 100%;
+      width: 50%;
       height: 100%;
       background: linear-gradient(
         90deg,
         transparent,
-        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0.25),
         transparent
       );
-      transition: all 0.6s ease;
-      z-index: 1;
+      transition: transform 0.7s ease, opacity 0.3s ease;
+      z-index: 2;
       opacity: 0;
+      pointer-events: none;
     }
-    
-    // Gradient overlay on hover
+
+    // Gradient overlay
     &::after {
       content: '';
       position: absolute;
@@ -260,15 +262,12 @@ footer {
       left: 0;
       right: 0;
       bottom: 0;
-      background: linear-gradient(135deg, rgba(38, 57, 89, 0.4) 0%, rgba(38, 57, 89, 0.1) 100%);
+      background: linear-gradient(135deg, rgba(38, 57, 89, 0.4), rgba(38, 57, 89, 0.05));
       opacity: 0;
       transition: opacity 0.4s ease;
       pointer-events: none;
       z-index: 1;
     }
-    
-    // Subtle image loading animation
-    animation: imageLoad 0.6s ease-out;
   }
 
   .post-content {
@@ -278,8 +277,8 @@ footer {
     flex-direction: column;
     justify-content: space-between;
     position: relative;
-    
-    // Subtle left border accent
+
+    // Left accent border - use scaleY instead of animating height
     &::before {
       content: '';
       position: absolute;
@@ -289,43 +288,42 @@ footer {
       width: 3px;
       background: linear-gradient(to bottom, $dark-blue, lighten($dark-blue, 20%));
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 0.4s ease, opacity 0.3s ease;
     }
-    
-    .post:hover &::before {
-      opacity: 1;
-    }
-    
+
     .post-date,
     .post-words {
       font-size: 12px;
       color: $dark-gray;
       opacity: 0.8;
-      transition: all 0.3s ease;
+      transition: opacity 0.3s ease, transform 0.3s ease;
       transform: translateY(-4px);
       display: inline-block;
     }
-    
+
     .post-title {
       margin: 0 0 12px;
       font-size: 30px;
       font-weight: 400;
       line-height: 1.3;
       overflow: hidden;
-      
+
       a {
         font-family: 'PT Serif', serif;
         text-decoration: none;
         color: $dark-blue;
         display: inline-block;
-        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transition: color 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         position: relative;
-        
-        // Animated entrance - will be set per post via nth-child
+
+        // Start visible; animation will override then reveal
         opacity: 0;
         transform: translateY(15px);
-        
-        // Underline effect on hover
+        animation: titleSlideIn 0.5s ease-out forwards;
+
+        // Underline on hover
         &::after {
           content: '';
           position: absolute;
@@ -335,63 +333,60 @@ footer {
           height: 2px;
           background: linear-gradient(to right, $dark-blue, lighten($dark-blue, 20%));
           transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-          box-shadow: 0 1px 3px rgba(38, 57, 89, 0.3);
         }
       }
     }
-    
+
     .post:hover .post-title a::after {
       width: 100%;
     }
-    
+
     p {
       margin-top: 0;
       margin-bottom: 12px;
       line-height: 1.6;
       color: lighten($body-color, 5%);
       transition: color 0.3s ease;
+      // Start invisible; nth-child loop sets staggered animation
       opacity: 0;
       transform: translateY(10px);
-      animation: textReveal 0.6s ease-out forwards;
-      animation-delay: 0.3s;
     }
-    
+
     .post:hover p {
       color: $body-color;
     }
   }
 }
 
-// Staggered animation for multiple posts with alternating directions
+// Staggered entrance per post (up to paginate:20)
 @for $i from 1 through 20 {
   .post:nth-child(#{$i}) {
     animation-delay: #{$i * 0.08}s;
-    
-    // Alternate slide direction for visual interest
+
     @if $i % 2 == 0 {
       animation-name: slideInScaleRight;
     } @else {
       animation-name: slideInScale;
     }
   }
-  
-  // Stagger title and text animations
+
   .post:nth-child(#{$i}) .post-title a {
-    animation: titleSlideIn 0.6s ease-out forwards;
-    animation-delay: #{$i * 0.08 + 0.2}s;
+    animation: titleSlideIn 0.5s ease-out forwards;
+    animation-delay: #{$i * 0.08 + 0.15}s;
   }
-  
-  .post:nth-child(#{$i}) p {
-    animation: textReveal 0.6s ease-out forwards;
-    animation-delay: #{$i * 0.08 + 0.3}s;
+
+  .post:nth-child(#{$i}) .post-content p {
+    animation: textReveal 0.5s ease-out forwards;
+    animation-delay: #{$i * 0.08 + 0.25}s;
   }
 }
 
-// Keyframe animations
+// --- Keyframe animations ---
+
 @keyframes slideInScale {
   from {
     opacity: 0;
-    transform: translateY(30px) translateX(-20px) scale(0.95);
+    transform: translateY(30px) translateX(-15px) scale(0.97);
   }
   to {
     opacity: 1;
@@ -402,44 +397,11 @@ footer {
 @keyframes slideInScaleRight {
   from {
     opacity: 0;
-    transform: translateY(30px) translateX(20px) scale(0.95);
+    transform: translateY(30px) translateX(15px) scale(0.97);
   }
   to {
     opacity: 1;
     transform: translateY(0) translateX(0) scale(1);
-  }
-}
-
-@keyframes pulseGlow {
-  0%, 100% {
-    opacity: 0;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.3;
-    transform: scale(1.02);
-  }
-}
-
-@keyframes pulseGlowHover {
-  0%, 100% {
-    opacity: 0.6;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.8;
-    transform: scale(1.01);
-  }
-}
-
-@keyframes imageLoad {
-  from {
-    opacity: 0;
-    filter: blur(5px);
-  }
-  to {
-    opacity: 1;
-    filter: blur(0);
   }
 }
 
@@ -465,25 +427,33 @@ footer {
   }
 }
 
-@keyframes textFadeIn {
-  from {
-    opacity: 0.7;
+// --- Accessibility: respect user motion preferences ---
+
+@media (prefers-reduced-motion: reduce) {
+  .post,
+  .post .post-title a,
+  .post .post-content p {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
-  to {
-    opacity: 1;
+
+  .post .post-thumbnail::before {
+    display: none; // disable shimmer
+  }
+
+  .post::after {
+    display: none; // disable glow
+  }
+
+  .post .post-content .post-date,
+  .post .post-content .post-words {
+    opacity: 0.8;
+    transform: none;
   }
 }
 
-@keyframes borderGrow {
-  from {
-    height: 0;
-    opacity: 0;
-  }
-  to {
-    height: 100%;
-    opacity: 1;
-  }
-}
+// --- Pagination links ---
 
 a.older-posts, a.newer-posts {
   font-size: 18px;
@@ -492,22 +462,24 @@ a.older-posts, a.newer-posts {
   text-decoration: none;
   padding: 8px 16px;
   border-radius: 6px;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+              background-color 0.3s ease,
+              border-color 0.3s ease,
+              color 0.3s ease;
   background-color: rgba(38, 57, 89, 0.05);
   border: 1px solid rgba(38, 57, 89, 0.1);
-  
+
   &:hover {
     background-color: rgba(38, 57, 89, 0.1);
     border-color: rgba(38, 57, 89, 0.2);
     color: $dark-blue;
-    transform: scale(1.05);
   }
 }
 
 a.older-posts:hover {
-  transform: translateX(5px) scale(1.05);
+  transform: translateX(5px);
 }
 
 a.newer-posts:hover {
-  transform: translateX(-5px) scale(1.05);
+  transform: translateX(-5px);
 }
