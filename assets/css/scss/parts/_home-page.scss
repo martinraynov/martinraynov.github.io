@@ -143,12 +143,83 @@ footer {
   align-items: stretch;
   min-height: 11rem;
   border-radius: 10px;
-  overflow: hidden;
-  transition: all .3s ease;
-  box-shadow: 0 1px 1px 0 rgba(31, 35, 46, .15);
+  // overflow: visible so the glow pseudo-element is not clipped
+  overflow: visible;
+  // Transition only specific GPU-friendly properties
+  transition:
+    transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    box-shadow 0.4s ease,
+    border-color 0.3s ease;
+  box-shadow: 0 2px 8px 0 rgba(31, 35, 46, 0.1);
+  background-color: $white;
+  position: relative;
+
+  // Staggered entrance animation
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  animation: slideInScale 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+
+  border: 1px solid rgba(31, 35, 46, 0.05);
+
+  // Glow pseudo-element - only visible on hover (not continuous)
+  &::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(38, 57, 89, 0.12), rgba(38, 57, 89, 0.04));
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+
   &:hover {
-    transform: translate(0px, -2px);
-    box-shadow: 0 15px 45px -10px rgba(10, 16, 34, .2);
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 20px 60px -10px rgba(10, 16, 34, 0.25);
+    border-color: rgba(38, 57, 89, 0.15);
+
+    // Show glow on hover only
+    &::after {
+      opacity: 1;
+    }
+
+    .post-thumbnail {
+      transform: scale(1.05);
+
+      // Gradient overlay
+      &::after {
+        opacity: 0.3;
+      }
+
+      // Shimmer sweep
+      &::before {
+        opacity: 1;
+        transform: translateX(200%);
+      }
+    }
+
+    .post-title a {
+      color: lighten($dark-blue, 10%);
+      transform: translateX(4px);
+    }
+
+    .post-content {
+      .post-date,
+      .post-words {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      // Left accent border
+      &::before {
+        transform: scaleY(1);
+        opacity: 1;
+      }
+    }
   }
 
   .post-thumbnail {
@@ -156,37 +227,253 @@ footer {
     max-width: 100%;
     min-height: 11rem;
     background-size: cover;
-    background-position: 50% 50%;
+    background-position: center center;
+    position: relative;
+    // Clip shimmer and overlay inside thumbnail only
+    overflow: hidden;
+    border-radius: 10px 0 0 10px;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    // Shimmer sweep
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.25),
+        transparent
+      );
+      transition: transform 0.7s ease, opacity 0.3s ease;
+      z-index: 2;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    // Gradient overlay
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(38, 57, 89, 0.4), rgba(38, 57, 89, 0.05));
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+      z-index: 1;
+    }
   }
 
   .post-content {
-    padding: 1rem;
+    padding: 1.5rem;
     width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+
+    // Left accent border - use scaleY instead of animating height
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(to bottom, $dark-blue, lighten($dark-blue, 20%));
+      opacity: 0;
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 0.4s ease, opacity 0.3s ease;
+    }
+
     .post-date,
     .post-words {
       font-size: 12px;
+      color: $dark-gray;
+      opacity: 0.8;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      transform: translateY(-4px);
+      display: inline-block;
     }
+
     .post-title {
-      margin: 0 0 10px;
+      margin: 0 0 12px;
       font-size: 30px;
       font-weight: 400;
+      line-height: 1.3;
+      overflow: hidden;
+
       a {
         font-family: 'PT Serif', serif;
         text-decoration: none;
         color: $dark-blue;
+        display: inline-block;
+        transition: color 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+
+        // Start visible; animation will override then reveal
+        opacity: 0;
+        transform: translateY(15px);
+        animation: titleSlideIn 0.5s ease-out forwards;
+
+        // Underline on hover
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          width: 0;
+          height: 2px;
+          background: linear-gradient(to right, $dark-blue, lighten($dark-blue, 20%));
+          transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
       }
     }
+
+    .post:hover .post-title a::after {
+      width: 100%;
+    }
+
     p {
       margin-top: 0;
+      margin-bottom: 12px;
+      line-height: 1.6;
+      color: lighten($body-color, 5%);
+      transition: color 0.3s ease;
+      // Start invisible; nth-child loop sets staggered animation
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .post:hover p {
+      color: $body-color;
     }
   }
 }
+
+// Staggered entrance per post (up to paginate:20)
+@for $i from 1 through 20 {
+  .post:nth-child(#{$i}) {
+    animation-delay: #{$i * 0.08}s;
+
+    @if $i % 2 == 0 {
+      animation-name: slideInScaleRight;
+    } @else {
+      animation-name: slideInScale;
+    }
+  }
+
+  .post:nth-child(#{$i}) .post-title a {
+    animation: titleSlideIn 0.5s ease-out forwards;
+    animation-delay: #{$i * 0.08 + 0.15}s;
+  }
+
+  .post:nth-child(#{$i}) .post-content p {
+    animation: textReveal 0.5s ease-out forwards;
+    animation-delay: #{$i * 0.08 + 0.25}s;
+  }
+}
+
+// --- Keyframe animations ---
+
+@keyframes slideInScale {
+  from {
+    opacity: 0;
+    transform: translateY(30px) translateX(-15px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) translateX(0) scale(1);
+  }
+}
+
+@keyframes slideInScaleRight {
+  from {
+    opacity: 0;
+    transform: translateY(30px) translateX(15px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) translateX(0) scale(1);
+  }
+}
+
+@keyframes titleSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes textReveal {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// --- Accessibility: respect user motion preferences ---
+
+@media (prefers-reduced-motion: reduce) {
+  .post,
+  .post .post-title a,
+  .post .post-content p {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .post .post-thumbnail::before {
+    display: none; // disable shimmer
+  }
+
+  .post::after {
+    display: none; // disable glow
+  }
+
+  .post .post-content .post-date,
+  .post .post-content .post-words {
+    opacity: 0.8;
+    transform: none;
+  }
+}
+
+// --- Pagination links ---
 
 a.older-posts, a.newer-posts {
   font-size: 18px;
   display: inline-block;
   color: $body-color;
-  transition: transform .2s;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+              background-color 0.3s ease,
+              border-color 0.3s ease,
+              color 0.3s ease;
+  background-color: rgba(38, 57, 89, 0.05);
+  border: 1px solid rgba(38, 57, 89, 0.1);
+
+  &:hover {
+    background-color: rgba(38, 57, 89, 0.1);
+    border-color: rgba(38, 57, 89, 0.2);
+    color: $dark-blue;
+  }
 }
 
 a.older-posts:hover {

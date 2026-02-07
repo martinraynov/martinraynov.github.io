@@ -6,8 +6,12 @@
     margin: 0 0.9% 1.5%;
     flex-direction: column;
 
+    // Simpler entrance animation on tablets
+    animation-name: fadeIn !important;
+
     .post-thumbnail {
       width: 100%;
+      border-radius: 10px 10px 0 0;
     }
 
     .post-content {
@@ -19,6 +23,11 @@
         }
       }
     }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 }
 
@@ -76,18 +85,51 @@
     margin: 2%;
     flex-direction: column;
 
+    // Simple fade on mobile - no transforms, no shimmer
+    animation-name: fadeIn !important;
+    animation-duration: 0.4s !important;
+
+    &::after {
+      display: none; // disable glow on mobile
+    }
+
     .post-thumbnail {
       width: 100%;
+      border-radius: 10px 10px 0 0;
+
+      &::before {
+        display: none; // disable shimmer on mobile
+      }
     }
 
     .post-content {
       width: 100%;
+
+      &::before {
+        display: none; // disable accent border on mobile
+      }
+
       .post-title {
         margin: 0 0 5px;
         a {
           font-size: 21px;
+          // Disable slide-in on mobile, just show text
+          animation: none !important;
+          opacity: 1;
+          transform: none;
         }
       }
+
+      p {
+        animation: none !important;
+        opacity: 1;
+        transform: none;
+      }
     }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 }

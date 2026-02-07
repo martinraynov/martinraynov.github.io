@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 var prefix = require('gulp-autoprefixer');
+var cleanCSS = require('gulp-clean-css');
 var imagemin = require('gulp-imagemin');
 var pngquant = require('imagemin-pngquant');
 var cache = require('gulp-cache');
@@ -30,16 +31,43 @@ gulp.task('browser-sync', ['sass', 'img', 'jekyll-build'], function() {
     });
 });
 
+// Production build task - css-minify depends on sass completing first
+gulp.task('css-prod', ['sass'], function () {
+    return gulp.src('assets/css/main.css')
+        .pipe(cleanCSS({
+            compatibility: '*',
+            level: 2
+        }))
+        .pipe(gulp.dest('_site/assets/css'))
+        .pipe(gulp.dest('assets/css'));
+});
+
+gulp.task('build', ['css-prod', 'img', 'jekyll-build']);
+
 // Compile files
 gulp.task('sass', function () {
     return gulp.src('assets/css/scss/main.scss')
         .pipe(sass({
-            outputStyle: 'expanded',
+            outputStyle: 'expanded', // Keep expanded for development
             onError: browserSync.notify
         }))
-        .pipe(prefix(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true }))
+        .pipe(prefix({
+            browsers: ['> 1%', 'last 2 versions', 'not dead', 'not ie <= 11'],
+            cascade: false
+        }))
         .pipe(gulp.dest('_site/assets/css'))
         .pipe(browserSync.reload({stream:true}))
+        .pipe(gulp.dest('assets/css'));
+});
+
+// Standalone CSS minification (expects sass to have run already)
+gulp.task('css-minify', ['sass'], function () {
+    return gulp.src('assets/css/main.css')
+        .pipe(cleanCSS({
+            compatibility: '*',
+            level: 2
+        }))
+        .pipe(gulp.dest('_site/assets/css'))
         .pipe(gulp.dest('assets/css'));
 });
 
